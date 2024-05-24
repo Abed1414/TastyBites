@@ -537,7 +537,6 @@ function ScriptViewItem(){
     </script>
 <?php } ?>
 
-
 <?php
 function ScriptContactUs(){ 
     // Script responsible for validating the contact information.
