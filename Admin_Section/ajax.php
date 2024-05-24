@@ -2,6 +2,8 @@
 ob_start();
 $action = $_GET['action'];
 include 'admin_class.php';
+// This file serves as the controller between
+// all the actions and the admin class
 $crud = new Action();
 if($action == 'login'){
 	$login = $crud->login();
@@ -63,6 +65,5 @@ if($action == "edit_reservations"){
 	if($save)
 		echo $save;
 }
-
 ob_end_flush();
 ?>

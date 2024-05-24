@@ -1,4 +1,5 @@
 <?php
+    // This file is only for database connection
     $host = '127.0.0.1';
     $port = 3307;
     $username = 'root';

@@ -9,10 +9,14 @@ Class Action {
 		include("DB_Connect.php");
     $this->db = $conn;
 	}
+
 	function __destruct() {
 	    $this->db->close();
 	    ob_end_flush();
 	}
+
+	// All the functions in the system along with 
+	// the post methods are in this file.
 
 	function login(){
 		extract($_POST);
@@ -116,13 +120,12 @@ Class Action {
 			exit;
 		}
 		else {
-			// Perform the database update
 			$update_query = $this->db->query("UPDATE Admins SET $data WHERE Admin_ID = $id");
 			if ($update_query) {
-				echo 1; // Success
+				echo 1; 
 				exit;
 			} else {
-				echo 2; // General error
+				echo 2; 
 				exit;
 			}
 		}
@@ -140,14 +143,14 @@ Class Action {
 	}
 	function delete_category(){
 		extract($_POST);
-		$update = $this->db->query("UPDATE Platters SET Category_ID = 1, Platter_status = 0 WHERE Category_ID = ".$id);
+			$update = $this->db->query("UPDATE Platters SET Category_ID = 1, Platter_status = 0 WHERE Category_ID = ".$id);
 		if ($update) {
-		$delete = $this->db->query("DELETE FROM Categories WHERE Category_ID = ".$id);
-		if ($delete) {
-			return 1;
-		} else {
-			return 0;
-		}
+			$delete = $this->db->query("DELETE FROM Categories WHERE Category_ID = ".$id);
+			if ($delete) {
+				return 1;
+			} else {
+				return 0;
+			}
 		}
 	}
 	function save_timing() {
@@ -155,10 +158,8 @@ Class Action {
 		$data = "Timing = '$name'";
 		
 		if (empty($id)) {
-			// Insert new record
 			$save = $this->db->query("INSERT INTO Timings (Timing, Timing_status) VALUES ('$name', 1)");
 		} else {
-			// Update existing record
 			$save = $this->db->query("UPDATE Timings SET $data, Timing_status = 1 WHERE Timing_ID = $id");
 		}
 		
