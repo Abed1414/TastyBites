@@ -224,48 +224,40 @@ Class Action {
 	
 	}
 	
-	function save_pages(){
+	function save_pages() {
 		extract($_POST);
-		$ID = $pageId;                    
-		if (isset($_POST['Update']) && $_POST['Update'] === 'Update') {
-				$new_title = $_POST['title']; 
-				$updateQuery = "UPDATE Pages SET Title = ? WHERE Page_ID = ?";
-				$stmt = mysqli_prepare($conn, $updateQuery);
-				mysqli_stmt_bind_param($stmt, "si", $new_title, $ID);
-				mysqli_stmt_execute($stmt);
+	
+		$stmt1 = $this->db->prepare("UPDATE Pages SET Title = ? WHERE Page_ID = ?");
 
-				if ($_SERVER["REQUEST_METHOD"] == "POST") {
-					if (isset($_POST["state"])) {
-						$newState = $_POST["state"];
-						if ($newState === "activate") {
-							$sql = "UPDATE Pages SET Active = 1 WHERE Page_ID = ?";
-						} elseif ($newState === "inactivate") {
-							$sql = "UPDATE Pages SET Active = 0 WHERE Page_ID = ?";
-						}
-				
-						// Prepare and execute the SQL statement
-						$stmtUpdateState = $conn->prepare($sql);
-						$stmtUpdateState->bind_param("i", $ID);
-						$stmtUpdateState->execute();
-						$stmtUpdateState->close();
-					}
-				}
-				
-
-			$i = 1;
-			while($i < $counter){
-				$bodyId = $i;
-				$bsid = "summernote" . $i;
-				$newBodySection = $_POST[$bsid];
-				$sqlUpdateBody = "UPDATE Pages_Body_Sections SET Body_Section = ? WHERE Page_ID = ? AND Body_Section_ID = ?";
-				$stmtUpdateBody = mysqli_prepare($conn, $sqlUpdateBody);
-				mysqli_stmt_bind_param($stmtUpdateBody, "sii", $newBodySection, $ID, $bodyId);
-				mysqli_stmt_execute($stmtUpdateBody);
-				mysqli_stmt_close($stmtUpdateBody);
-				$i++;
-			}
+		if ($stmt1) {
+			$stmt1->bind_param('si', $_POST['title'], $_SESSION['Page_ID']);
+			$stmt1->execute();
 		}
-	}
 
+		if ($_POST['state'] === "activate")
+			$stmt2 = $this->db->prepare("UPDATE Pages SET Active = 1 WHERE Page_ID = ?");
+		else
+			$stmt2 = $this->db->prepare("UPDATE Pages SET Active = 0 WHERE Page_ID = ?");
+
+		if ($stmt2) {
+			$stmt2->bind_param('i', $_SESSION['Page_ID']);
+			$stmt2->execute();
+		}
+		
+		$i = 1;
+        while (isset($_POST["summernote$i"])) {
+            $newBodySection = $_POST["summernote$i"];
+			$stmt3 = $this->db->prepare("UPDATE Pages_Body_Sections SET Body_Section = ? WHERE Page_ID = ? AND Body_Section_ID = ?");
+			if ($stmt3) {
+				$stmt3->bind_param('sii', $newBodySection, $_SESSION['Page_ID'], $i);
+				$stmt3->execute();
+			}
+			$i++;
+		}
+
+		if($stmt1 && $stmt2 && $stmt3)
+			return 1;
+		
+	}
 
 }

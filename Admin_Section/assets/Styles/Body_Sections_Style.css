@@ -28,7 +28,8 @@
     padding-right: 20px;
     padding-left: 30px;
     padding-bottom: 20px;
-    background-color:rgba(192,192,192,0.5);
+    /*background-color:rgba(192,192,192,0.5);*/
+    background-color: white;
 }
 a, a:hover, a:active, a:focus{
     text-decoration: none;
@@ -37,4 +38,19 @@ a, a:hover, a:active, a:focus{
     text-decoration: none;
     background-color: red;
 }
-
+.search_bar_main{
+    margin-bottom: 30px; 
+    margin-top: 30px;
+}
+.flex{
+    display: flex;
+}
+.div-60{
+    width: 60%;
+}
+.div-30{
+    width: 30%;
+}
+.br1{
+    margin-top: 50px;
+}
