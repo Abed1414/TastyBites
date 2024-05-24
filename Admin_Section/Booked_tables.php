@@ -12,14 +12,6 @@
         .calendar .header { background-color: #f2f2f2; }
         .calendar-cell { cursor: pointer; }
         .today { background-color: #ffe0b2; }
-        .loader-container { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 9999; }
-        .loader { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 30px; height: 30px; animation: loading 1s linear infinite; }
-        @keyframes loading { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        /* Modal styles */
-        .modal { display: none; position: fixed; z-index: 100; left: 8.5%; top: -20%; width: 100%; height: 100%; overflow: auto; }
-        .modal-content { background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; }
-        .close { color: #aaa; float: right; font-size: 28px; font-weight: bold; }
-        .close:hover, .close:focus { color: black; text-decoration: none; cursor: pointer; }
     </style>
     <script>
         $(document).ready(function() {
